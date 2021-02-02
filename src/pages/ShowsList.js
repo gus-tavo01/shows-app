@@ -1,10 +1,7 @@
 import React from 'react';
 
-export default function (props) {
+export default function ShowsList (props) {
   return <div>
-    sort by label
-    sort by dropdown
-    asd/desc icon button
-    list of shows
+    <h2>Shows list page.</h2>
   </div>;
 }
