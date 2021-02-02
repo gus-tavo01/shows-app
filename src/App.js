@@ -1,15 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hola sarita
-        </p>
+        App menu bar goes here        
       </header>
+      App pages goes here
     </div>
   );
 }
