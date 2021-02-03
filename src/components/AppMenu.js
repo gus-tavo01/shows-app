@@ -10,7 +10,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import StarsIcon from '@material-ui/icons/Stars';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +51,7 @@ const items = [
 export default function AppMenu() {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -89,7 +90,7 @@ export default function AppMenu() {
                     onClick={() => handleOnItemClick(item)}
                     button
                     key={i}
-                    selected={false}
+                    selected={item.path === location.pathname}
                   >
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.text}/>
