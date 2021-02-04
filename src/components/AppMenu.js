@@ -46,7 +46,7 @@ const items = [
   },
   {
     text: 'Most watched',
-    path: '/most-watched',
+    path: '/trending',
     icon: <VisibilityIcon />,
   },
 ];

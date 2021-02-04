@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ShowsList from './pages/ShowsList';
 import ShowDetails from './pages/ShowDetails';
 import NotFound from './pages/NotFound';
+import ShowTypes from './constants/showTypes';
 
 function App() {
   return (
@@ -18,10 +19,13 @@ function App() {
             <Home />
           </Route>
           <Route path="/most-popular">
-            <ShowsList />
+            <ShowsList type={ShowTypes.popular} />
           </Route>
           <Route path="/most-rated">
-            <div><h2>Most rated shows</h2></div>
+            <ShowsList type={ShowTypes.topRated} />
+          </Route>
+          <Route path="/trending">
+            <ShowsList type={ShowTypes.trending} />
           </Route>
           <Route path="/details/:id">
             <ShowDetails />
