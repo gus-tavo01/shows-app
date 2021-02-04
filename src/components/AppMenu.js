@@ -12,6 +12,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import StarsIcon from '@material-ui/icons/Stars';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import ThumbsUpIcon from '@material-ui/icons/ThumbUp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,12 +42,12 @@ const items = [
   {
     text: 'Most rated',
     path: '/most-rated',
-    icon: <StarsIcon />,
+    icon: <ThumbsUpIcon />,
   },
   {
     text: 'Most watched',
     path: '/most-watched',
-    icon: <StarsIcon />,
+    icon: <VisibilityIcon />,
   },
 ];
 export default function AppMenu() {
