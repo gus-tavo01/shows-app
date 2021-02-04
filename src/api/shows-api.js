@@ -19,7 +19,7 @@ export default class ShowsApi {
 
   getTopRated = async (filters) => this.instance.get('/tv/top_rated', filters);
   getPopular = async (filters) => this.instance.get('/tv/popular', filters);
-  getTrending = async (time, filters) => this.instance.get($`/trending/tv/${time}`, filters);
+  getTrending = async (time, filters) => this.instance.get(`/trending/tv/${time}`, filters);
 }
 
 function successCallback(response) {
