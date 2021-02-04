@@ -18,7 +18,7 @@ describe('shows-service getMostPopular', () => {
     mockShowsApi.getPopular.mockReset();
   });
 
-  test('When is valid, expect true', async () => {
+  test('When api returns data, expect a successful service response', async () => {
     // Arrange
     const page = 1;
 
@@ -61,24 +61,29 @@ describe('shows-service getMostPopular', () => {
     // Assert
     expect(result).toMatchObject(expectedResult);
   });
+
+  // 'When api response has errors, expect an unsuccessful service response'
 });
 
 // describe('shows-service getTopRated', () => {
-//   test('When is valid, expect true', async () => {
+//   test('When api returns valid data, expect a successful service response', async () => {
 //     // Arrange
 //     const expectedResult = 'One';
 
 //     // Assert
 //     expect('One').toBe(expectedResult);
 //   });
+
+// 'When theres an api error, expect a service response with errors'
 // });
 
 // describe('shows-service getTrending', () => {
-//   test('When is valid, expect true', async () => {
+//   test('When api returns valid data, expect a successful service response', async () => {
 //     // Arrange
 //     const expectedResult = 'One';
 
 //     // Assert
 //     expect('One').toBe(expectedResult);
 //   });
+// 'When api returns errors, expect a service response with errors'
 // });
