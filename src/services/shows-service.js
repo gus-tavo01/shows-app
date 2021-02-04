@@ -41,7 +41,10 @@ export default class ShowsService {
     const serviceResponse = new ServiceResponse();
     try {
       const showTime = 'week';
-      const apiResponse = await this.showsApi.getTrending(showTime);
+      const filters = {
+        language: defaultLanguage
+      }
+      const apiResponse = await this.showsApi.getTrending(showTime, filters);
       serviceResponse.Ok(apiResponse);
     } catch(error) {
       serviceResponse.Error(error);
