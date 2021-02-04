@@ -35,18 +35,18 @@ const useStyles = makeStyles((theme) => ({
 
 const items = [
   {
-    text: 'Most popular',
-    path: '/most-popular',
+    text: 'Mas populares',
+    path: '/mas-populares',
     icon: <StarsIcon />,
   },
   {
-    text: 'Most rated',
-    path: '/most-rated',
+    text: 'Mejor valorados',
+    path: '/mejor-valorados',
     icon: <ThumbsUpIcon />,
   },
   {
-    text: 'Most watched',
-    path: '/trending',
+    text: 'Viendo ahora',
+    path: '/viendo-ahora',
     icon: <VisibilityIcon />,
   },
 ];
@@ -70,7 +70,7 @@ export default function AppMenu() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
             <Link to="/" className={classes.link}>Shows App</Link>
@@ -103,6 +103,7 @@ export default function AppMenu() {
           </Drawer>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   );
 }

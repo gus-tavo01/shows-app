@@ -18,16 +18,16 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/most-popular">
+          <Route path="/mas-populares">
             <ShowsList type={ShowTypes.popular} />
           </Route>
-          <Route path="/most-rated">
-            <ShowsList type={ShowTypes.topRated} />
+          <Route path="/mejor-valorados">
+            <ShowsList type={ShowTypes.rated} />
           </Route>
-          <Route path="/trending">
+          <Route path="/viendo-ahora">
             <ShowsList type={ShowTypes.trending} />
           </Route>
-          <Route path="/details/:id">
+          <Route path="/shows/:id/detalles">
             <ShowDetails />
           </Route>
           <Route path="*">
