@@ -3,13 +3,13 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import ShowTypes from './constants/showTypes';
 // Components
 import AppMenu from './components/AppMenu';
 import Home from './pages/Home';
-import ShowsList from './pages/ShowsList';
+import Shows from './pages/Shows';
 import ShowDetails from './pages/ShowDetails';
 import NotFound from './pages/NotFound';
-import ShowTypes from './constants/showTypes';
 
 function App() {
   return (
@@ -23,13 +23,13 @@ function App() {
             <Home />
           </Route>
           <Route path="/mas-populares">
-            <ShowsList type={ShowTypes.popular} pageTitle="Mas populares" />
+            <Shows title="Mas populares" type={ShowTypes.popular} />
           </Route>
           <Route path="/mejor-valorados">
-            <ShowsList type={ShowTypes.rated} pageTitle="Mejor valorados" />
+            <Shows type={ShowTypes.rated} title="Mejor valorados" />
           </Route>
           <Route path="/viendo-ahora">
-            <ShowsList type={ShowTypes.trending} pageTitle="Lo que se esta viendo" />
+            <Shows type={ShowTypes.trending} title="Lo que se esta viendo" />
           </Route>
           <Route path="/shows/:id/detalles">
             <ShowDetails />
