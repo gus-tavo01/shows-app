@@ -3,7 +3,7 @@ import ShowsList from '../components/ShowsList';
 import ShowsService from '../services/shows-service';
 import { loadCurrentShow, loadShowsList } from '../redux/actions';
 import ShowTypes from '../constants/showTypes';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 
 const showsService = new ShowsService();
 const initialPage = 1;

@@ -49,7 +49,7 @@ export default function ShowCard(props) {
       />
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
+          <Typography component="h3" variant="h5">
             <Link to={`shows/${props.id}/detalles`}>
               {props.title}
             </Link>
