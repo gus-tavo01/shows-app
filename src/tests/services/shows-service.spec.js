@@ -235,3 +235,5 @@ describe('shows-service getTrending', () => {
     expect(result).toMatchObject(expectedResult);
   });
 });
+
+// TODO: add unit test for getDetails method
