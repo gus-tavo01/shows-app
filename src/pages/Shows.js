@@ -24,6 +24,8 @@ export default function Shows(props) {
       case ShowTypes.trending:
         fetchResult = await showsService.getTrending(initialPage);
       break;
+      default:
+      break;
     }
 
     const popularShows = fetchResult.payload.results;
