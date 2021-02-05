@@ -12,6 +12,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import StarsIcon from '@material-ui/icons/Stars';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import ThumbsUpIcon from '@material-ui/icons/ThumbUp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,19 +35,19 @@ const useStyles = makeStyles((theme) => ({
 
 const items = [
   {
-    text: 'Most popular',
-    path: '/most-popular',
+    text: 'Mas populares',
+    path: '/mas-populares',
     icon: <StarsIcon />,
   },
   {
-    text: 'Most rated',
-    path: '/most-rated',
-    icon: <StarsIcon />,
+    text: 'Mejor valorados',
+    path: '/mejor-valorados',
+    icon: <ThumbsUpIcon />,
   },
   {
-    text: 'Most watched',
-    path: '/most-watched',
-    icon: <StarsIcon />,
+    text: 'Viendo ahora',
+    path: '/viendo-ahora',
+    icon: <VisibilityIcon />,
   },
 ];
 export default function AppMenu() {
@@ -68,7 +70,7 @@ export default function AppMenu() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
             <Link to="/" className={classes.link}>Shows App</Link>
@@ -101,6 +103,7 @@ export default function AppMenu() {
           </Drawer>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   );
 }

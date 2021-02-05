@@ -8,5 +8,7 @@ export default function ShowDetails (props) {
     <p>id: { id }</p>
     <p>show name: { props.name }</p>
     <p>description: {props.description}</p>
+    <p>genero: {props.genre}</p>
+    <p>duracion: {props.duration}</p>
   </div>;
 }
