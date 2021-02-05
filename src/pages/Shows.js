@@ -43,6 +43,7 @@ export default function Shows(props) {
   // fetch shows only when prop type is updated
   React.useEffect(() => {
     fetchShows();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.type]);
 
   return (

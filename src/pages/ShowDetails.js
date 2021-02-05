@@ -55,6 +55,7 @@ export default function ShowDetails (props) {
   useEffect(() => {
     // fetch show details
     fetchShow();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return <section className={classes.root}>
@@ -62,6 +63,7 @@ export default function ShowDetails (props) {
       <img 
         className={classes.poster}
         src={imageApiBaseUrl + currentShow.poster_path}
+        alt={currentShow.overview}
       />
       <div>
         <Typography variant="h4" component="h2">
