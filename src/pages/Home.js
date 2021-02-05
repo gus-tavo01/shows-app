@@ -14,5 +14,6 @@ export default function Home(props) {
       <li>Jest</li>
     </ul>
     <p>Usar el menu de la aplicacion para navegar.</p>
+    <b>GALV.</b>
   </Fragment>;
 }
