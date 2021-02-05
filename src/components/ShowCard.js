@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,9 @@ export default function ShowCard(props) {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
-            {props.title}
+            <Link to={`shows/${props.id}/detalles`}>
+              {props.title}
+            </Link>
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             Rate: {props.rate}
