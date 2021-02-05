@@ -51,4 +51,18 @@ export default class ShowsService {
     }
     return serviceResponse;
   }
+
+  getDetails = async (id) => {
+    const serviceResponse = new ServiceResponse();
+    try {
+      const filters = {
+        language: defaultLanguage
+      };
+      const apiResponse = await this.showsApi.getById(id, filters);
+      serviceResponse.Ok(apiResponse);
+    } catch(error) {
+      serviceResponse.Error(error);
+    }
+    return serviceResponse;
+  }
 }
