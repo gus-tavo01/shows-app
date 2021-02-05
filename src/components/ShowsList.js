@@ -1,5 +1,5 @@
 import React from 'react';
-// mui
+// mui components
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -10,9 +10,10 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
 // components
-import ShowCard from '../components/ShowCard';
-// service
-import ShowsService from '../services/shows-service';
+import ShowCard from './ShowCard';
+
+import { imageApiBaseUrl } from '../constants/api';
+import formatRate from '../helpers/formatRate';
 
 const useStyles = makeStyles({
   root: {
@@ -30,24 +31,10 @@ const useStyles = makeStyles({
   }
 });
 
-const shows = [
-  {
-    title: 'First show',
-    rate: 3.6,
-  },
-  {
-    title: 'Second show',
-  },
-  {
-    title: 'Third show for my ticky siamese cat.',
-  },
-  {
-    title: 'Yayis show siamese cat.',
-  }
-]
-
 export default function ShowsList (props) {
   const classes = useStyles();
+  // TODO
+  // replace by store sortBy value
   const [sortBy, setSortBy] = React.useState('name');
 
   const handleOnSortChange = (event) => {
@@ -56,7 +43,7 @@ export default function ShowsList (props) {
 
   return <section className={classes.root}>
     <Typography variant="h2" gutterBottom>
-      { props.type } shows.
+      { props.title }
     </Typography>
     <Container maxWidth="sm" className={classes.controls}>
     <Typography variant="subtitle1" component="label">Ordenar por:</Typography>
@@ -78,8 +65,23 @@ export default function ShowsList (props) {
     <CssBaseline />
     <Container maxWidth="sm">
       {
-        shows.map ((show) => <ShowCard imageSrc="" title={show.title} rate={show.rate} />)
+        props.shows.map ((show) => (
+          <ShowCard
+            key={show.id}
+            id={show.id}
+            title={show.name}
+            rate={formatRate(show.vote_average)}
+            imageSrc={imageApiBaseUrl + show.poster_path}
+            onItemClick={() => props.onShowClick(show.id)}
+          />
+        ))
       }
     </Container>
   </section>;
+}
+
+ShowsList.defaultProps = {
+  shows: [],
+  title: 'Shows list section',
+  onShowClick: () => {}
 }
