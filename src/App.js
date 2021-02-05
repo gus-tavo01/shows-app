@@ -1,4 +1,8 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
 // Components
 import AppMenu from './components/AppMenu';
 import Home from './pages/Home';
@@ -19,13 +23,13 @@ function App() {
             <Home />
           </Route>
           <Route path="/mas-populares">
-            <ShowsList type={ShowTypes.popular} />
+            <ShowsList type={ShowTypes.popular} pageTitle="Mas populares" />
           </Route>
           <Route path="/mejor-valorados">
-            <ShowsList type={ShowTypes.rated} />
+            <ShowsList type={ShowTypes.rated} pageTitle="Mejor valorados" />
           </Route>
           <Route path="/viendo-ahora">
-            <ShowsList type={ShowTypes.trending} />
+            <ShowsList type={ShowTypes.trending} pageTitle="Lo que se esta viendo" />
           </Route>
           <Route path="/shows/:id/detalles">
             <ShowDetails />
@@ -33,7 +37,7 @@ function App() {
           <Route path="*">
             <NotFound />
           </Route>
-          </Switch>
+        </Switch>
       </Router>
     </div>
   );
