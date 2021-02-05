@@ -2,7 +2,7 @@ import { LOADSHOWSLIST, LOADCURRENTSHOW } from './action-types';
 
 const initialState = {
   showsList: [],
-  currentShow: null,
+  currentShow: {},
 };
 
 // changes the state here
