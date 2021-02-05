@@ -13,17 +13,23 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: 5
+    justifyContent: 'space-around',
+    padding: 5,
+    marginBottom: 20,
   },
   details: {
     display: 'flex',
     flexDirection: 'column',
   },
   content: {
-    flex: '1 0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'center',    
+    alignItems: 'center'
   },
   cover: {
-    width: 160,
+    width: 180,
+    height: 230,
   },
   favBtn: {
     paddingTop: 8,    
@@ -32,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShowCard(props) {
   const classes = useStyles();
-  const favoriteText = 'Remove from favorites';
-  const nonFavoriteText = 'Add to favorites';
 
   return (
     <Card className={classes.root}>
@@ -48,14 +52,14 @@ export default function ShowCard(props) {
             {props.title}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Rate
+            Rate: {props.rate}
           </Typography>
-          <Rating name="read-only" value={props.rate} readOnly precision={0.5} />
+          <Rating name="read-only" value={props.rate} readOnly precision={0.1} />
         </CardContent>
       </div>
       <div className={classes.favBtn}>
-        <IconButton aria-label={props.isFavorite ? favoriteText : nonFavoriteText}>
-          <Tooltip title={props.isFavorite ? favoriteText : nonFavoriteText}>
+        <IconButton aria-label="Marcar como favorito">
+          <Tooltip title="Marcar como favorito">
             <FavoriteIcon style={props.isFavorite ? {color: 'deeppink'} : null} />
           </Tooltip>
         </IconButton>
