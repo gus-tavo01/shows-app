@@ -99,12 +99,10 @@ export default function ShowDetails (props) {
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
-          <ul>
           {
             currentShow.genres ? currentShow.genres.map((g) => g.name).join(', ')
             : null
           }
-          </ul>
         </Typography>
       </AccordionDetails>
     </Accordion>
