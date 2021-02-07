@@ -114,12 +114,12 @@ export default function Shows(props) {
       </Container>
 
       {
-        loadingSpinner
+        loadingSpinner ||
+        <ShowsList
+          shows={showsList}
+          onShowClick={handleOnShowClick}
+        />
       }
-      <ShowsList
-        shows={showsList}
-        onShowClick={handleOnShowClick}
-      />
     </section>
   )
 }
