@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { 
+  useEffect,
+  useState,
+  useCallback
+} from 'react';
 import ShowsList from '../components/ShowsList';
 import ShowsService from '../services/shows-service';
 // mui components
@@ -10,10 +14,11 @@ import Container from '@material-ui/core/Container';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { loadCurrentShow, loadShowsList } from '../redux/actions';
-import ShowTypes from '../constants/showTypes';
 import { useDispatch, useSelector } from 'react-redux';
+import ShowTypes from '../constants/showTypes';
+import useLoader from '../hooks/useLoader';
 
 const showsService = new ShowsService();
 const initialPage = 1;
@@ -29,47 +34,52 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    marginBottom: 10
   }
 });
 
 export default function Shows(props) {
   const classes = useStyles();
   const [sortBy, setSortBy] = useState('name');
-  const [isFetching, setFetching] = useState(true);
+  const [loadingSpinner, showSpinner, hideSpinner] = useLoader();
 
-  const handleOnSortChange = (event) => {
-    setSortBy(event.target.value);
-  };
+  const handleOnSortChange = useCallback(
+    (event) => setSortBy(event.target.value),
+    []
+  );
   
   const dispatch = useDispatch();
   const { showsList } = useSelector((store) => store);
 
-  const fetchShows = async () => {
-    setFetching(true);
-    let fetchResult;
-    switch (props.type) {
-      case ShowTypes.rated:
-        fetchResult = await showsService.getTopRated(initialPage);
-      break;
-      case ShowTypes.popular:
-        fetchResult = await showsService.getMostPopular(initialPage);
-      break;
-      case ShowTypes.trending:
-        fetchResult = await showsService.getTrending(initialPage);
-      break;
-      default:
-      break;
-    }
+  const fetchShows = useCallback(
+    async () => {
+      showSpinner();
+      let fetchResult;
+      switch (props.type) {
+        case ShowTypes.rated:
+          fetchResult = await showsService.getTopRated(initialPage);
+          break;
+        case ShowTypes.popular:
+          fetchResult = await showsService.getMostPopular(initialPage);
+          break;
+        case ShowTypes.trending:
+          fetchResult = await showsService.getTrending(initialPage);
+          break;
+        default:
+          break;
+      }
 
-    const popularShows = fetchResult.payload.results;
-    // TODO: handle errors
-    if (fetchResult.isSuccess)
-    {
-      dispatch(loadShowsList(popularShows));
-    }
-    setFetching(false);
-  }
+      const popularShows = fetchResult.payload.results;
+      // TODO: handle errors
+      if (fetchResult.isSuccess)
+      {
+        dispatch(loadShowsList(popularShows));
+      }      
+      hideSpinner();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []
+  );
 
   const handleOnShowClick = (showId) => {
     dispatch(loadCurrentShow(showId));
@@ -78,8 +88,7 @@ export default function Shows(props) {
   // fetch shows only when prop type is updated
   useEffect(() => {
     fetchShows();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.type]);
+  }, [props.type, fetchShows]);
 
   return (
     <section className={classes.root}>
@@ -105,13 +114,12 @@ export default function Shows(props) {
       </Container>
 
       {
-        isFetching ? 
-          <CircularProgress size={100} /> 
-          : <ShowsList
-              shows={showsList}
-              onShowClick={handleOnShowClick}
-            />
+        loadingSpinner
       }
+      <ShowsList
+        shows={showsList}
+        onShowClick={handleOnShowClick}
+      />
     </section>
   )
 }
