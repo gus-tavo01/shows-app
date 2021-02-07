@@ -1,4 +1,4 @@
-import { LOADSHOWSLIST, LOADCURRENTSHOW } from './action-types';
+import { LOADSHOWSLIST, LOADCURRENTSHOW, SORTSHOWS } from './action-types';
 
 export const loadShowsList = (payload) => ({
   type: LOADSHOWSLIST,
@@ -7,5 +7,10 @@ export const loadShowsList = (payload) => ({
 
 export const loadCurrentShow = (payload) => ({
   type: LOADCURRENTSHOW,
+  payload,
+});
+
+export const sortShows = (payload) => ({
+  type: SORTSHOWS,
   payload,
 });
