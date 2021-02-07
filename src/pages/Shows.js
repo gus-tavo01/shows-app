@@ -1,6 +1,5 @@
 import React, { 
   useEffect,
-  useState,
   useCallback
 } from 'react';
 import ShowsList from '../components/ShowsList';
@@ -14,11 +13,17 @@ import Container from '@material-ui/core/Container';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { loadCurrentShow, loadShowsList } from '../redux/actions';
+import {
+  loadCurrentShow,
+  loadShowsList,
+  sortShows 
+} from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+// constants
 import ShowTypes from '../constants/showTypes';
+import Sorting from '../constants/sorting';
 import useLoader from '../hooks/useLoader';
+import { sortItems } from '../helpers/sortItems';
 
 const showsService = new ShowsService();
 const initialPage = 1;
@@ -41,16 +46,9 @@ const useStyles = makeStyles({
 
 export default function Shows(props) {
   const classes = useStyles();
-  const [sortBy, setSortBy] = useState('name');
   const [loadingSpinner, showSpinner, hideSpinner] = useLoader();
-
-  const handleOnSortChange = useCallback(
-    (event) => setSortBy(event.target.value),
-    []
-  );
-  
   const dispatch = useDispatch();
-  const { showsList } = useSelector((store) => store);
+  const { showsList, sorting } = useSelector((store) => store);
 
   const fetchShows = useCallback(
     async () => {
@@ -70,11 +68,12 @@ export default function Shows(props) {
           break;
       }
 
-      const popularShows = fetchResult.payload.results;
+      const showsList = sortItems(fetchResult.payload.results, sorting);
+       
       // TODO: handle errors
       if (fetchResult.isSuccess)
       {
-        dispatch(loadShowsList(popularShows));
+        dispatch(loadShowsList(showsList));
       }      
       hideSpinner();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,10 +84,35 @@ export default function Shows(props) {
     dispatch(loadCurrentShow(showId));
   }
 
+  const handleSortByChange = (event) => {
+    const { value } = event.target;
+    const payload = { ...sorting, field: value };
+    dispatch(sortShows(payload));
+  }
+
+  const handleSortOrderChange = () => {
+    let order;
+    if (sorting.order === Sorting.orders.asc) {
+      order = Sorting.orders.desc;
+    }
+
+    if (sorting.order === Sorting.orders.desc) {
+      order = Sorting.orders.asc;
+    }
+    
+    const payload = { ...sorting, order };
+    dispatch(sortShows(payload));
+  }
+
   // fetch shows only when prop type is updated
   useEffect(() => {
     fetchShows();
   }, [props.type, fetchShows]);
+
+  useEffect(() => {
+    const list = sortItems(showsList, sorting);
+    dispatch(loadShowsList(list));
+  }, [sorting.order, sorting.field]);
 
   return (
     <section className={classes.root}>
@@ -99,14 +123,14 @@ export default function Shows(props) {
         <Typography variant="subtitle1" component="label">Ordenar por:</Typography>
         <Select
           id="sortSelector"
-          value={sortBy}
-          onChange={handleOnSortChange}
+          value={sorting.field}
+          onChange={handleSortByChange}
           displayEmpty
         >
-          <MenuItem value="name">Nombre</MenuItem>
-          <MenuItem value="rate">Puntuacion</MenuItem>
+          <MenuItem value={Sorting.fields.name}>Nombre</MenuItem>
+          <MenuItem value={Sorting.fields.rate}>Puntuacion</MenuItem>
         </Select>
-        <IconButton aria-label="ascendente-descendente">
+        <IconButton aria-label="ascendente-descendente" onClick={handleSortOrderChange}>
           <Tooltip title="Ascendente-Descendente">
             <ImportExportIcon />
           </Tooltip>
