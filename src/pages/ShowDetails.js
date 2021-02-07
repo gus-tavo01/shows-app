@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useParams } from 'react-router-dom';
+import useLoader from '../hooks/useLoader';
 import { loadCurrentShow } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import ShowsService from '../services/shows-service';
@@ -41,8 +42,10 @@ export default function ShowDetails (props) {
   const { id } = useParams();
   const { currentShow } = useSelector((store) => store);
   const dispatch = useDispatch();
+  const [loadingSpinner, showSpinner, hideSpinner] = useLoader();
 
   const fetchShow = async () => {
+    showSpinner();
     const showDetailsResponse = await showsService.getDetails(id);
     const showDetails = showDetailsResponse.payload;
 
@@ -50,6 +53,7 @@ export default function ShowDetails (props) {
       // save show on store
       dispatch(loadCurrentShow(showDetails));
     }
+    hideSpinner();
   }
 
   useEffect(() => {
@@ -62,7 +66,7 @@ export default function ShowDetails (props) {
     <div className={classes.details}>
       <img 
         className={classes.poster}
-        src={imageApiBaseUrl + currentShow.poster_path}
+        src={currentShow.poster_path ? imageApiBaseUrl + currentShow.poster_path: ''}
         alt={currentShow.overview}
       />
       <div>
@@ -73,6 +77,9 @@ export default function ShowDetails (props) {
           {currentShow.overview}
         </p>
       </div>
+      {
+        loadingSpinner
+      }
     </div>
     
     <Accordion>
