@@ -6,9 +6,13 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { useParams } from 'react-router-dom';
 import useLoader from '../hooks/useLoader';
+import useFavorite from '../hooks/useFavorite';
 import { loadCurrentShow } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import ShowsService from '../services/shows-service';
@@ -33,8 +37,12 @@ const useStyles = makeStyles((theme) => ({
   details: {
     display: 'flex',
     marginBottom: 10,
-    alignItems: 'center',
   },
+  favButton: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+  }
 }));
 
 export default function ShowDetails (props) {
@@ -43,6 +51,7 @@ export default function ShowDetails (props) {
   const { currentShow } = useSelector((store) => store);
   const dispatch = useDispatch();
   const [loadingSpinner, showSpinner, hideSpinner] = useLoader();
+  const [isFavorite, switchFavorite] = useFavorite(id);
 
   const fetchShow = async () => {
     showSpinner();
@@ -70,6 +79,18 @@ export default function ShowDetails (props) {
         alt={currentShow.overview}
       />
       <div>
+      <div className={classes.favButton}>
+        <IconButton
+          aria-label="Marcar como favorito"
+          onClick={switchFavorite}
+        >
+          <Tooltip title="Marcar como favorito">
+            <FavoriteIcon
+              style={isFavorite ? {color: 'deeppink'} : null}
+            />
+          </Tooltip>
+        </IconButton>
+      </div>
         <Typography variant="h4" component="h2">
           {currentShow.name}
         </Typography>
