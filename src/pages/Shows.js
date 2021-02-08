@@ -1,4 +1,5 @@
-import React, { 
+import React, {
+  useState,
   useEffect,
   useCallback
 } from 'react';
@@ -12,7 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Tooltip from '@material-ui/core/Tooltip';
+import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
+// redux
 import {
   loadCurrentShow,
   loadShowsList,
@@ -26,7 +29,6 @@ import useLoader from '../hooks/useLoader';
 import { sortItems } from '../helpers/sortItems';
 
 const showsService = new ShowsService();
-const initialPage = 1;
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -46,9 +48,10 @@ const useStyles = makeStyles({
 
 export default function Shows(props) {
   const classes = useStyles();
+  const [page, setPage] = useState(1);
   const [loadingSpinner, showSpinner, hideSpinner] = useLoader();
   const dispatch = useDispatch();
-  const { showsList, sorting } = useSelector((store) => store);
+  const { shows, sorting } = useSelector((store) => store);
 
   const fetchShows = useCallback(
     async () => {
@@ -56,28 +59,32 @@ export default function Shows(props) {
       let fetchResult;
       switch (props.type) {
         case ShowTypes.rated:
-          fetchResult = await showsService.getTopRated(initialPage);
+          fetchResult = await showsService.getTopRated(page);
           break;
         case ShowTypes.popular:
-          fetchResult = await showsService.getMostPopular(initialPage);
+          fetchResult = await showsService.getMostPopular(page);
           break;
         case ShowTypes.trending:
-          fetchResult = await showsService.getTrending(initialPage);
+          fetchResult = await showsService.getTrending(page);
           break;
         default:
           break;
       }
-
+      
       const showsList = sortItems(fetchResult.payload.results, sorting);
+      const payload = {
+        items: showsList,
+        totalPages: fetchResult.payload.total_pages,
+      };
        
       // TODO: handle errors
       if (fetchResult.isSuccess)
       {
-        dispatch(loadShowsList(showsList));
-      }      
+        dispatch(loadShowsList(payload));
+      }
       hideSpinner();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []
+    }, [props.type, page]
   );
 
   const handleOnShowClick = (showId) => {
@@ -104,13 +111,17 @@ export default function Shows(props) {
     dispatch(sortShows(payload));
   };
 
+  const handlePagination = (e, value) => {
+    setPage(value);
+  };
+
   // fetch shows only when prop type is updated
   useEffect(() => {
     fetchShows();
-  }, [props.type, fetchShows]);
+  }, [props.type, page]);
 
   useEffect(() => {
-    const list = sortItems(showsList, sorting);
+    const list = sortItems(shows.items, sorting);
     dispatch(loadShowsList(list));
   }, [sorting.order, sorting.field]);
 
@@ -140,10 +151,18 @@ export default function Shows(props) {
       {
         loadingSpinner ||
         <ShowsList
-          shows={showsList}
+          shows={shows.items}
           onShowClick={handleOnShowClick}
         />
       }
+      <Pagination
+        count={shows.totalPages}
+        onChange={handlePagination}
+        page={page}
+        color="primary"
+        showFirstButton
+        showLastButton
+      />
     </section>
   )
 }
