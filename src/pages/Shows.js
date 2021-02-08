@@ -82,13 +82,13 @@ export default function Shows(props) {
 
   const handleOnShowClick = (showId) => {
     dispatch(loadCurrentShow(showId));
-  }
+  };
 
   const handleSortByChange = (event) => {
     const { value } = event.target;
     const payload = { ...sorting, field: value };
     dispatch(sortShows(payload));
-  }
+  };
 
   const handleSortOrderChange = () => {
     let order;
@@ -102,7 +102,7 @@ export default function Shows(props) {
     
     const payload = { ...sorting, order };
     dispatch(sortShows(payload));
-  }
+  };
 
   // fetch shows only when prop type is updated
   useEffect(() => {
