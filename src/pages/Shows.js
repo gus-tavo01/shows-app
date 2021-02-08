@@ -122,7 +122,11 @@ export default function Shows(props) {
 
   useEffect(() => {
     const list = sortItems(shows.items, sorting);
-    dispatch(loadShowsList(list));
+    const payload = {
+      items: list,
+      totalPages: shows.totalPages,
+    };
+    dispatch(loadShowsList(payload));
   }, [sorting.order, sorting.field]);
 
   return (
