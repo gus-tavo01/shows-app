@@ -37,12 +37,13 @@ export default class ShowsService {
     return serviceResponse;
   }
 
-  getTrending = async () => {
+  getTrending = async (page) => {
     const serviceResponse = new ServiceResponse();
     try {
       const showTime = 'week';
       const filters = {
-        language: defaultLanguage
+        language: defaultLanguage,
+        page,
       }
       const apiResponse = await this.showsApi.getTrending(showTime, filters);
       serviceResponse.Ok(apiResponse);
