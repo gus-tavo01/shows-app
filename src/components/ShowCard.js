@@ -10,6 +10,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import useFavorite from '../hooks/useFavorite';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShowCard(props) {
   const classes = useStyles();
+  const [isFavorite, switchFavorite] = useFavorite(props.id);
 
   return (
     <Card className={classes.root}>
@@ -61,9 +63,14 @@ export default function ShowCard(props) {
         </CardContent>
       </div>
       <div className={classes.favBtn}>
-        <IconButton aria-label="Marcar como favorito">
+        <IconButton
+          aria-label="Marcar como favorito"
+          onClick={switchFavorite}
+        >
           <Tooltip title="Marcar como favorito">
-            <FavoriteIcon style={props.isFavorite ? {color: 'deeppink'} : null} />
+            <FavoriteIcon
+              style={isFavorite ? {color: 'deeppink'} : null}
+            />
           </Tooltip>
         </IconButton>
       </div>
