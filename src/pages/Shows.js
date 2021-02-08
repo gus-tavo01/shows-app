@@ -84,7 +84,7 @@ export default function Shows(props) {
       }
       hideSpinner();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.type, page]
+    }, [props.type, page, dispatch]
   );
 
   const handleOnShowClick = (showId) => {
@@ -118,7 +118,7 @@ export default function Shows(props) {
   // fetch shows only when prop type is updated
   useEffect(() => {
     fetchShows();
-  }, [props.type, page]);
+  }, [props.type, page, fetchShows]);
 
   useEffect(() => {
     const list = sortItems(shows.items, sorting);
@@ -127,11 +127,12 @@ export default function Shows(props) {
       totalPages: shows.totalPages,
     };
     dispatch(loadShowsList(payload));
-  }, [sorting.order, sorting.field]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sorting, dispatch]);
 
   return (
     <section className={classes.root}>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h4" gutterBottom component="h2">
         { props.title }
       </Typography>
       <Container maxWidth="sm" className={classes.controls}>
