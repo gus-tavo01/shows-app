@@ -37,7 +37,7 @@ export default class ShowsService {
     return serviceResponse;
   }
 
-  getTrending = async () => {
+  getTrending = async (page) => {
     const serviceResponse = new ServiceResponse();
     try {
       const showTime = 'week';
