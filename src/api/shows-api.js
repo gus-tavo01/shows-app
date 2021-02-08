@@ -17,9 +17,15 @@ export default class ShowsApi {
     this.instance = client;
   }
 
-  getTopRated = async (filters) => this.instance.get(`/tv/top_rated?language=${filters.language}`);
-  getPopular = async (filters) => this.instance.get(`/tv/popular?language=${filters.language}`);
-  getTrending = async (time, filters) => this.instance.get(`/trending/tv/${time}?language=${filters.language}`);
+  getTopRated = async (filters) => this.instance.get(
+    `/tv/top_rated?language=${filters.language}&page=${filters.page}`
+  );
+  getPopular = async (filters) => this.instance.get(
+    `/tv/popular?language=${filters.language}&page=${filters.page}`
+  );
+  getTrending = async (time, filters) => this.instance.get(
+    `/trending/tv/${time}?language=${filters.language}&page=${filters.page}`
+  );
   getById = async (id, filters) => this.instance.get(`/tv/${id}?language=${filters.language}`);
 }
 
