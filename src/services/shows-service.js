@@ -42,7 +42,8 @@ export default class ShowsService {
     try {
       const showTime = 'week';
       const filters = {
-        language: defaultLanguage
+        language: defaultLanguage,
+        page,
       }
       const apiResponse = await this.showsApi.getTrending(showTime, filters);
       serviceResponse.Ok(apiResponse);
