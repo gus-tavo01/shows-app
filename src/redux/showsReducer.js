@@ -2,7 +2,10 @@ import { LOADSHOWSLIST, LOADCURRENTSHOW, SORTSHOWS } from './action-types';
 import { fields, orders } from '../constants/sorting';
 
 const initialState = {
-  showsList: [],
+  shows: {
+    items: [],
+    totalPages: 0
+  },
   currentShow: {},
   sorting: {
     order: orders.asc,
@@ -16,7 +19,7 @@ const showsReducer = (state = initialState, action) => {
     case LOADSHOWSLIST:
       return {
         ...state,
-        showsList: action.payload,
+        shows: action.payload,
       };
     case LOADCURRENTSHOW:
       return {
